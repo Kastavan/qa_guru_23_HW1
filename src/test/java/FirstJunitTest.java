@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class FirstJunitTest {
 
@@ -15,12 +14,14 @@ public class FirstJunitTest {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager";
-        Configuration.holdBrowserOpen = true;
+
 
     }
     @Test
     void positiveTest(){
-        open("https://demoqa.com/automation-practice-form");
+        open("/automation-practice-form");
+        executeJavaScript("$('#fixedban').remove()");
+        executeJavaScript("$('footer').remove()");
         $("#firstName").setValue("Name");
         $("#lastName").setValue("Last Name");
         $("#userEmail").setValue("pochta@mail.com");
@@ -42,7 +43,9 @@ public class FirstJunitTest {
 
         $(".modal-dialog").should(appear);
         $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
-        $(".table-responsive").shouldHave(text("Name"),text("pochta@mail.com"),text("9991234567"));
+        $(".table-responsive").shouldHave(text("Name"),text("pochta@mail.com"),text("9991234567"),
+                text("Last Name"), text("01 April,2003"), text("Male"), text("English"), text("Reading"), text("1.png"),
+                text("Some place"), text("Haryana Karnal"));
 
 
     }
